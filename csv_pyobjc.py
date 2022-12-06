@@ -1,14 +1,11 @@
 import csv
 import win32gui
-import logging
 
 # CSV形式でLOG保存関数
 #引数(AUDIO_FILE_NAME:nameFormat【2021-01-01-10.10.55】, ResultList:認識結果, num:認識結果文字数, saveFileName:保存するファイルの名前, deviceNUM :MIXER=0,MIC=1)
 
 class csv_pyobjc():
-    def __init__(self):
-        logging.debug('csv_pyobjc.py',"start")
-        
+    
     def addwriteCsvTwoContents(self,AUDIO_FILE_NAME, ResultList:list, num, saveFileName,confidence, deviceNUM = 0):    
         month=AUDIO_FILE_NAME[5:7];day=AUDIO_FILE_NAME[8:10];hh=AUDIO_FILE_NAME[11:13];mm=AUDIO_FILE_NAME[14:16];ss=AUDIO_FILE_NAME[17:19]
         audioNameR=audioNameL=AUDIO_FILE_NAME
@@ -25,11 +22,8 @@ class csv_pyobjc():
                 # print(conv.do(CR0))
                 # CR0Len = int(len(CR0))
                 CR0Len = num
-
-        # w = w.writerow([month+"/"+day,hh+":"+mm+":"+ss,audioNameR,CR0,CR,CR0Len,audioNameL,CL0,CL,CL0Len, cut_time,"NULL",progressTime])
         w = w.writerow([month+"/"+day, hh+":"+mm+":"+ss, audioNameR, CR, confidence, CR0Len, deviceNUM,self.get_winObjct()])
         file.close()
-        logging.debug('csv_pyobjc.py',"add_recognize_result_for_"+saveFileName)
 
     def get_winObjct(self):
         # 実行時に操作されているアプリケーション名の取得

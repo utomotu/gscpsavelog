@@ -1,10 +1,5 @@
-from __future__ import division
 import datetime
-from pyexpat import model
-
 import re
-import sys
-
 from google.cloud import speech_v1 as speech
 # from google.cloud import speech_v1 storage
 # from google.cloud import speech
@@ -14,7 +9,6 @@ import queue
 import wave
 from pykakasi import kakasi
 import csv_pyobjc
-import logging
 
 # DEVICE_INDEX  = 2
 # 使用可能なデバイスインデックスがプリントする方法
@@ -90,14 +84,12 @@ class _MicrophoneStream(object):
         self._audio_interface.terminate()
         def _save_audio():
             # save wav failes
-            logging.debug('_MicrophoneStream %s', "Start Save Audio: "+self._WAVE_OUTPUT_FILENAME)
             wf = wave.open(self._WAVE_OUTPUT_FILENAME, 'wb')
             wf.setnchannels(1)
             wf.setsampwidth(self._audio_interface.get_sample_size(FORMAT))
             wf.setframerate(RATE)
             wf.writeframes(b''.join(self._frames))
             wf.close()
-            logging.debug('_MicrophoneStream %s', "End Save Audio")
         if(self._save_audio):
             _save_audio()
             # t1 = threading.Thread(target=_save_audio, daemon=True)
